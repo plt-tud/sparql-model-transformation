@@ -1,0 +1,20 @@
+@prefix hm:     <http://comvantage.eu/graph-trans/hmi/meta#> . 
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+
+hm:Sketch a rdfs:Class;
+    rdfs:label "sketch".
+
+hm:Faceplate a rdfs:Class;
+    rdfs:label "face plate".
+
+
+hm:hasFaceplate a owl:ObjectProperty;
+    rdfs:label "has faceplate";
+    rdfs:domain hm:Sketch;
+    rdfs:range  hm:Faceplate.
+
+
+
+# TODO: mit FS absprechen

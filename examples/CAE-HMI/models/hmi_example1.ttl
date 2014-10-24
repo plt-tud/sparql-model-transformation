@@ -1,0 +1,8 @@
+@prefix hm:     <http://comvantage.eu/graph-trans/hmi/meta#> .
+@prefix hi:     <http://comvantage.eu/graph-trans/hmi/ex1#> . 
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+hi:A1 a hm:Faceplate;
+    rdfs:label "SCE.A1".
+     
