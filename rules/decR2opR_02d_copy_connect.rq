@@ -1,0 +1,27 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX  list:  <http://jena.hpl.hp.com/ARQ/list#>
+PREFIX  c:  <http://comvantage.eu/correspondence/>
+
+# Copy insert graphs to minus (step)
+# Copy subgraph
+
+# TODO: Check for already used blank nodes
+
+INSERT{
+# CONSTRUCT {
+    ?copy1 ?p ?copy2.
+}
+# SELECT DISTINCT  *
+WHERE{
+    ?item1 a c:Mark;
+        c:ref ?copy1.
+    ?item2 a c:Mark;
+        c:ref ?copy2.
+        
+    ?copy1 a c:Copy.
+    ?copy2 a c:Copy.
+    
+    ?item1 ?p ?item2
+}
+

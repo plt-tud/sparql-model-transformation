@@ -1,0 +1,35 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX  list:  <http://jena.hpl.hp.com/ARQ/list#>
+
+
+# Verschiebe right graph in WHERE clause
+
+DELETE {
+# Lösche Graph aus INSERT clause
+    ?graph_element rdf:first ?graph; rdf:rest ?element_successor.
+    ?element_precesor ?p ?graph_element.
+
+# Einfügen Graph in WHERE clause
+    ?query sp:where ?where_first_item.
+}
+INSERT{
+#  Lösche Graph aus INSERT clause
+    ?element_precesor ?p ?element_successor.
+
+# Einfügen Graph in WHERE clause
+    ?query sp:where _:l1.
+    _:l1 rdf:first ?graph; rdf:rest ?where_first_item.
+}
+WHERE{
+    ?query sp:insertPattern ?insertList;
+        sp:where ?where_first_item.
+    ?insertList list:member ?graph.
+    ?graph a sp:NamedGraph;
+        sp:graphNameNode <graph://table>.
+
+    ?graph_element rdf:first ?graph;
+        rdf:rest ?element_successor.
+    ?element_precesor ?p ?graph_element.
+}
+

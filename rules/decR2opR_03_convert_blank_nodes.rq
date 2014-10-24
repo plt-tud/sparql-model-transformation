@@ -1,0 +1,18 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX  list:  <http://jena.hpl.hp.com/ARQ/list#>
+
+# Converting Blank Nodes into Unbound Nodes for variables which are used in WHERE clause
+
+INSERT{
+    ?b sp:varName ?newVarName.
+}
+# SELECT DISTINCT  ?a ?p ?b ?newVarName
+WHERE{
+    [] sp:where ?wherePattern.
+        ?wherePattern (rdf:first|rdf:rest|sp:elements)*/(sp:subject|sp:predicate|sp:object) ?b.
+        FILTER (isBlank(?b))
+        FILTER NOT EXISTS {?b ?p1 ?o1}
+    LET (?newVarName := str(md5(str(rand()))))
+}
+
