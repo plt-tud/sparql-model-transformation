@@ -8,6 +8,9 @@ clear:
 	rm -f dump.*
 	rm -fR DB
 
+info:
+	@echo "This make file transforms declarative rules to operational rules"
+
 init:
 	mkdir -p operational/forward operational/backward operational/correspondence
 

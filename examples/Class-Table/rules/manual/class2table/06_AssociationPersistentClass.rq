@@ -1,0 +1,56 @@
+PREFIX cm: <http://comvantage.eu/graph-trans/class/m#>
+PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
+PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
+
+# one-to-many associations between persistent classes
+
+INSERT {
+    GRAPH <graph://table> {
+        ?t1 tm:fkeys _:fkey;
+            tm:cols _:ncol.
+        _:fkey a tm:FKey;
+            tm:references ?t2;
+            tm:cols _:ncol.
+        _:ncol a tm:Column;
+            tm:name ?ncol_name;
+            tm:type ?ncol_type.
+    }
+    GRAPH <graph://correspondence> {
+        _:at2 c:c ?a1, _:fkey.
+    }
+}
+# SELECT *
+WHERE {
+    GRAPH <graph://class> {
+        ?c1 a cm:Class.
+        ?a1 a cm:Association;
+            cm:name ?a1_name;
+            cm:src ?c1;
+            cm:dest ?c2.
+        ?c2 a cm:Class;
+            cm:is_persistent true;
+            cm:attrs ?a2.
+        ?a2 a cm:Attribute.
+    }
+    GRAPH <graph://correspondence> {
+        ?ct1 c:c ?c1, ?t1.
+        ?ct2 c:c ?c2, ?t2.
+        ?at1 c:c ?a2, ?col.
+    }
+    GRAPH <graph://table> {
+        ?t1 a tm:Table.
+        ?t2 a tm:Table;
+            tm:pkeys ?col.
+        ?col a tm:Column;
+            tm:name ?col_name;
+            tm:type ?col_type.
+    }
+
+#     MINUS { 
+#         GRAPH <graph://correspondence> {
+#             [] c:c ?c2, ?t.
+#         }
+#     }
+    LET (?ncol_name := concat(?a1_name,'_',?col_name) )
+    LET (?ncol_type := ?col_type)
+}

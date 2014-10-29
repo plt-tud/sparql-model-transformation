@@ -1,0 +1,44 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+@prefix tm: <http://comvantage.eu/graph-trans/table/m#> .
+
+tm:Table a rdfs:Class;
+    rdfs:label "Table".
+    
+tm:FKey a rdfs:Class;
+    rdfs:label "FKey".
+
+tm:Column a rdfs:Class;
+    rdfs:label "Column".
+    
+    
+tm:cols a owl:ObjectProperty;
+    rdfs:label "cols";
+    rdfs:domain tm:Table, tm:FKey;
+    rdfs:range tm:Column.
+
+tm:pkeys a owl:ObjectProperty;
+    rdfs:label "pkey";
+    rdfs:domain tm:Table;
+    rdfs:range tm:Column.
+    
+tm:fkeys a owl:ObjectProperty;
+    rdfs:label "fkeys";
+    rdfs:domain tm:Table;
+    rdfs:range tm:FKey.
+
+tm:references a owl:ObjectProperty;
+    rdfs:label "ref";
+    rdfs:domain tm:FKey;
+    rdfs:range tm:Table.
+    
+    
+tm:name a owl:DataTypeProperty;
+    rdfs:label "name";
+    rdfs:domain tm:Column, tm:Table.
+
+tm:type a owl:DataTypeProperty;
+    rdfs:label "type";
+    rdfs:domain tm:Column.

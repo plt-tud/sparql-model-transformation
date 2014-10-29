@@ -1,0 +1,62 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+@prefix cm: <http://comvantage.eu/graph-trans/class/m#> .
+
+cm:Class a rdfs:Class;
+    rdfs:subClassOf cm:Classifier;
+    rdfs:label "Class".
+
+cm:Attribute a rdfs:Class;
+    rdfs:label "Attribute".
+
+cm:PrimitiveDataType a rdfs:Class;
+    rdfs:subClassOf cm:Classifier;
+    rdfs:label "PrimitiveDataType".
+
+cm:Classifier a rdfs:Class;
+    rdfs:label "Classifier".
+ 
+cm:Association a rdfs:Class;
+    rdfs:label "Association".
+
+
+cm:parent a owl:ObjectProperty;
+    rdfs:label "parent";
+    rdfs:domain cm:Class;
+    rdfs:range cm:Class.
+
+cm:src a owl:ObjectProperty;
+    rdfs:label "src";
+    rdfs:domain cm:Association;
+    rdfs:range cm:Class.
+    
+cm:dest a owl:ObjectProperty;
+    rdfs:label "dest";
+    rdfs:domain cm:Association;
+    rdfs:range cm:Class.
+
+cm:attrs a owl:ObjectProperty;
+    rdfs:label "attrs";
+    rdfs:domain cm:Class;
+    rdfs:range cm:Attribute.
+
+cm:type a owl:ObjectProperty;
+    rdfs:label "type";
+    rdfs:domain cm:Attribute;
+    rdfs:range cm:Classifier.
+    
+    
+cm:name a owl:DataTypeProperty;
+    rdfs:label "name";
+    rdfs:domain cm:Classifier, cm:Attribute, cm:Association.
+
+cm:is_persistent a owl:DataTypeProperty;
+    rdfs:label "is_persistent";
+    rdfs:domain cm:Class.
+    
+cm:is_primary a owl:DataTypeProperty;
+    rdfs:label "is_primary";
+    rdfs:domain cm:Attribute.
+    

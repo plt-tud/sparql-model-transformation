@@ -1,0 +1,54 @@
+PREFIX cm: <http://comvantage.eu/graph-trans/class/m#>
+PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
+PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
+
+# table2class
+# primitive attributes to columns for classes
+# works even for non-persistent child classes or associated classes due to connectNonPersistentClassesWithTables
+
+INSERT {
+    GRAPH <graph://class> {
+        ?c cm:attrs _:a.
+        _:a a cm:Attribute;
+            cm:type _:p;
+            cm:name ?a_name.
+        _:p a cm:PrimitiveDataType;
+            cm:name ?p_name.
+    }
+    GRAPH <graph://correspondence> {
+        _:ct1 c:c _:a, ?col.
+    }
+}
+WHERE {
+    GRAPH <graph://class> {
+        ?c a cm:Class.
+    }
+    GRAPH <graph://correspondence> {
+        ?ct c:c ?c, ?t;
+            c:columnPrefix ?ct_columnPrefix.
+    }
+    GRAPH <graph://table> {
+         ?t a tm:Table;
+            tm:cols ?col.
+        ?col a tm:Column;
+            tm:name ?col_name;
+            tm:type ?col_type.
+    }
+#     TODO: inverse function of concat?
+    LET (?a_name := substrconcat(?ct_columnPrefix,?col_name) )
+    LET (?p_name := ?col_type)
+    MINUS { 
+        GRAPH <graph://class> {
+            ?c cm:attrs ?a.
+            ?a a cm:Attribute;
+                cm:type ?p;
+                cm:name ?a_name.
+            ?p a cm:PrimitiveDataType;
+                cm:name ?p_name.
+        }
+        GRAPH <graph://correspondence> {
+            ?ct1 c:c ?a, ?col.
+        }
+
+    }
+}

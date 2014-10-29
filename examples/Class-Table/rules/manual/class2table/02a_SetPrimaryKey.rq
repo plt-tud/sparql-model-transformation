@@ -1,0 +1,34 @@
+PREFIX cm: <http://comvantage.eu/graph-trans/class/m#>
+PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
+PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
+
+# set primary key for primary attributes
+
+INSERT {
+    GRAPH <graph://table> {
+        ?2 tm:pkeys ?3.
+    }
+}
+
+WHERE {
+    GRAPH <graph://class> {
+        ?4 a cm:Class;
+            cm:attrs ?1.
+        ?1 a cm:Attribute;
+            cm:is_primary true.
+    }
+    GRAPH <graph://correspondence> {
+        ?5 c:c ?4, ?2.
+        ?6 c:c ?1, ?3.
+    }
+    GRAPH <graph://table> {
+        ?2 a tm:Table;
+            tm:cols ?3.
+        ?3 a tm:Column.
+    }
+    MINUS { 
+         GRAPH <graph://table> {
+            ?2 tm:pkey ?3.
+        }
+    }
+}

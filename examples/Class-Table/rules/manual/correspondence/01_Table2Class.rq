@@ -1,0 +1,30 @@
+PREFIX cm: <http://comvantage.eu/graph-trans/class/m#>
+PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
+PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
+
+# create correspondence links betweem tables and classes
+# correspondence
+
+INSERT {
+    GRAPH <graph://correspondence> {
+        [] c:c ?t, ?c;
+            c:columnPrefix "".
+    }
+}
+WHERE {
+    GRAPH <graph://class> {
+        ?c a cm:Class;
+            cm:name ?name;
+            cm:is_persistent true.
+    } 
+    GRAPH <graph://table> {
+        ?t  a tm:Table;
+            tm:name ?name.
+    }
+    MINUS {
+        GRAPH <graph://correspondence> {
+            [] c:c ?c, ?t;
+                c:columnPrefix "".
+        }
+    }
+}

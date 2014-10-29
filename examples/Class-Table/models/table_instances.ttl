@@ -1,0 +1,41 @@
+@prefix tm: <http://comvantage.eu/graph-trans/table/m#> .
+@prefix ti: <http://comvantage.eu/graph-trans/table/i#> .
+
+
+ti:t1 a tm:Table;
+    tm:name "Order";
+    tm:pkeys ti:c1;
+    tm:fkeys ti:f;
+    tm:cols ti:c1, ti:c2.
+    
+ti:c1 a tm:Column;
+    tm:name "order_no";
+    tm:type "int".
+    
+ti:c2 a tm:Column;
+    tm:name "customer_name";
+    tm:type "String".
+
+# this is a bug in the article of (Königs, 2005)
+# ti:c3 a tm:Column;
+#     tm:name "customer_address_addr";
+#     tm:type "String".
+
+
+ti:t2 a tm:Table;
+    tm:name "Customer";
+    tm:cols  ti:c4, ti:c5;
+    tm:pkeys ti:c4, ti:c5.
+
+ti:c5 a tm:Column;
+    tm:name "name";
+    tm:type "String".
+    
+ti:c4 a tm:Column;
+    tm:name "address_addr";
+    tm:type "String".
+
+        
+ti:f a tm:FKey;
+    tm:cols ti:c2; #, ti:c3;
+    tm:references ti:t2.

@@ -1,0 +1,56 @@
+PREFIX cm: <http://comvantage.eu/graph-trans/class/m#>
+PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
+PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
+
+# declarative
+# primitive attributes to columns for classes
+# works even for non-persistent child classes or associated classes due to connectNonPersistentClassesWithTables
+
+INSERT {
+    GRAPH <graph://class> {
+        ?c cm:attrs _:a.
+        _:a cm:Attribute;
+            cm:type _:p;
+            cm:name ?a_name.
+        _:p a cm:PrimitiveDataType;
+            cm:name ?p_name.
+    }
+    GRAPH <graph://correspondence> {
+        _:ct1 c:c _:a, _:col.
+    }
+    GRAPH <graph://table> {
+        ?t tm:cols _:col.
+        _:col a tm:Column;
+            tm:name ?col_name;
+            tm:type ?col_type.
+    }
+}
+WHERE {
+    GRAPH <graph://class> {
+        ?c a cm:Class.
+    }
+    GRAPH <graph://correspondence> {
+        ?ct c:c ?c, ?t;
+            c:columnPrefix ?ct_columnPrefix.
+    }
+    GRAPH <graph://table> {
+         ?t a tm:Table.
+    }
+#   TODO: Hier besser FILTER als LET/BIND?
+    FILTER (?col_name = concat(?ct_columnPrefix,?a_name) )
+    FILTER (?col_type = ?p_name)
+#     # Alternative ?
+#     # TODO: Mehrere Zuweisungen?
+#     LET (?col_name := concat(?ct_columnPrefix,"##p1##"))
+#     LET (?a_name := "##p1##")
+#     
+#     LET (?col_type := "##p2##")
+#     LET (?p_name := "##p2##")
+#     
+#     # TODO: try VALUES
+#     VALUES (?col_name ?a_name) {
+#         ('##p1##' 'test')
+#     }
+
+    MINUS { }
+}

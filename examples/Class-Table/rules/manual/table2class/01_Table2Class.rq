@@ -1,0 +1,36 @@
+PREFIX cm: <http://comvantage.eu/graph-trans/class/m#>
+PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
+PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
+
+# create class for each table
+# table2class
+
+INSERT {
+    GRAPH <graph://correspondence> {
+        [] c:c ?t, _:c;
+            c:columnPrefix "".
+    }
+    GRAPH <graph://class> {
+        _:c a cm:Class;
+            cm:name ?c_name;
+            cm:is_persistent true.
+    }
+}
+WHERE {
+     GRAPH <graph://table> {
+        ?t  a tm:Table;
+            tm:name ?t_name.
+    }
+    MINUS {
+        GRAPH <graph://correspondence> {
+            [] c:c ?c, ?t;
+                c:columnPrefix "".
+        }
+        GRAPH <graph://class> {
+            ?c a cm:Class;
+                cm:name ?c_name;
+                cm:is_persistent true.
+        }
+    }
+    LET (?c_name := ?t_name)
+}

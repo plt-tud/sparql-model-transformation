@@ -1,0 +1,31 @@
+PREFIX cm: <http://comvantage.eu/graph-trans/class/m#>
+PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
+PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
+
+# connect tables and non-persistent classes to classes with inheritance or associations
+
+INSERT {
+    GRAPH <graph://correspondence> {
+        _:ct1 c:c ?c2, ?t;
+            c:columnPrefix ?c_name.
+    }
+}
+WHERE {
+    GRAPH <graph://class> {
+        ?c1 a cm:Class.
+        ?c2 a cm:Class.
+        ?c1 cm:parent* ?c2;
+            cm:name ?c_name.
+    }
+    GRAPH <graph://correspondence> {
+        ?ct1 c:c ?c2, ?t.
+    }
+    GRAPH <graph://table> {
+        ?t a tm:Table.
+    }
+    MINUS { 
+        GRAPH <graph://correspondence> {
+            [] c:c ?c2, ?t.
+        }
+    }
+}

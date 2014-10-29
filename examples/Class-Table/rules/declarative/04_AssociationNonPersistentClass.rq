@@ -1,0 +1,42 @@
+PREFIX cm: <http://comvantage.eu/graph-trans/class/m#>
+PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
+PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
+
+# one-to-many associations between persistent classes
+
+INSERT {
+    GRAPH <graph://class> {
+        ?a a cm:Association;
+            cm:name ?a_name;
+            cm:src ?c1;
+            cm:dest ?c2.
+        ?c2 a cm:Class;
+            cm:is_persistent false.
+    }
+    GRAPH <graph://correspondence> {
+        _:ct2 c:c ?c2, ?t;
+            c:columnPrefix ?ct2_columnPrefix.
+    }
+    GRAPH <graph://table> {
+        
+    }
+    
+}
+WHERE {
+    GRAPH <graph://class> {
+        ?c1 a cm:Class.
+    }
+    GRAPH <graph://correspondence> {
+        ?ct1 c:c ?c1, ?t;
+            c:columnPrefix ?ct1_columnPrefix.
+    }
+    GRAPH <graph://table> {
+        ?t a tm:Table.
+    }
+    LET (?ct2_columnPrefix := concat(?ct1_columnPrefix,?a_name,'_'))
+    MINUS { 
+        GRAPH <graph://correspondence> {
+            [] c:c ?c2, ?t.
+        }
+    }
+}
