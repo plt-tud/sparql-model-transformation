@@ -2,7 +2,7 @@
 .SECONDARY: %.spin.ttl
 
 info:
-	@echo "This makefile performs model transformation on a cae-hmi example"
+	@echo "This makefile performs model transformation on a class-table example"
 
 
 all: init run
