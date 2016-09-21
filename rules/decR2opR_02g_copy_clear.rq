@@ -1,17 +1,10 @@
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sp: <http://spinrdf.org/sp#>
-PREFIX  list:  <http://jena.hpl.hp.com/ARQ/list#>
-PREFIX  c:  <http://comvantage.eu/correspondence/>
-
 # Copy insert graphs to minus (step)
 # Copy subgraph
 
-# TODO: Check for already used blank nodes
 
 DELETE{
     ?s ?p ?o.
 }
-# SELECT DISTINCT  *
 WHERE{
     {
         ?s a c:Mark.
@@ -21,14 +14,12 @@ WHERE{
     UNION
     {
         ?s a c:Copy.
-        LET ( ?p := rdf:type)
-        LET ( ?o := c:Copy)
+        BIND ( rdf:type AS ?p )
+        BIND ( c:Copy AS ?o)
     }
     UNION
     {
         ?s c:ref ?o.
-        LET ( ?p := c:ref)
+        BIND (c:ref AS ?p)
     }
-    
 }
-

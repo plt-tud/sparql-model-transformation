@@ -1,8 +1,3 @@
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sp: <http://spinrdf.org/sp#>
-PREFIX  list:  <http://jena.hpl.hp.com/ARQ/list#>
-
-
 # Verschiebe right graph in WHERE clause
 
 DELETE {
@@ -26,10 +21,9 @@ WHERE{
         sp:where ?where_first_item.
     ?insertList list:member ?graph.
     ?graph a sp:NamedGraph;
-        sp:graphNameNode <graph://table>.
+        sp:graphNameNode <graph://right>.
 
     ?graph_element rdf:first ?graph;
         rdf:rest ?element_successor.
     ?element_precesor ?p ?graph_element.
 }
-

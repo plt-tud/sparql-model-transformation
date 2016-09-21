@@ -1,10 +1,5 @@
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sp: <http://spinrdf.org/sp#>
-PREFIX  list:  <http://jena.hpl.hp.com/ARQ/list#>
-PREFIX  c:  <http://comvantage.eu/correspondence/>
-
 # Mark start node
-# 
+#
 INSERT{
     ?item a c:Mark.
 }
@@ -14,4 +9,3 @@ WHERE{
         (rdf:rest|rdf:first|sp:elements|sp:graphNameNode|sp:subject|sp:predicate|sp:object|rdf:type)* ?item.
     FILTER (!isLiteral(?item))
 }
-

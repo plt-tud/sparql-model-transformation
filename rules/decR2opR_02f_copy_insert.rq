@@ -1,30 +1,22 @@
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sp: <http://spinrdf.org/sp#>
-PREFIX  list:  <http://jena.hpl.hp.com/ARQ/list#>
-PREFIX  c:  <http://comvantage.eu/correspondence/>
-
- 
 DELETE{
     ?minus_last_item ?p rdf:nil.
 }
 INSERT{
     ?minus_last_item ?p ?newtree.
 }
-# SELECT *
 WHERE{
     [] sp:insertPattern/c:ref ?newtree.
     {
         ?minus a sp:Minus;
             sp:elements/rdf:rest* ?minus_last_item.
             ?minus_last_item rdf:rest rdf:nil.
-            LET (?p := rdf:rest)
+            BIND (rdf:rest AS ?p)
     }
     UNION
     {
         ?minus a sp:Minus;
             sp:elements rdf:nil.
-        LET (?minus_last_item := ?minus)
-        LET (?p := sp:elements)
+        BIND (?minus AS ?minus_last_item)
+        BIND (sp:elements AS ?p)
     }
 }
-
