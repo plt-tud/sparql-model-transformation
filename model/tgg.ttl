@@ -1,0 +1,17 @@
+
+
+tgg:RuleSet a owl:Class;
+    rdfs:label "Rule Set".
+
+tgg:Rule a owl:Class;
+    rdfs:label "Rule".
+
+
+tgg:OperationalRule rdfs:subClassOf tgg:Rule;
+    rdfs:label "Operational Rule".
+
+tgg:eclarativeRule rdfs:subClassOf tgg:Rule;
+        rdfs:label "Declarative Rule".
+
+tgg:Model a owl:Class;
+    rdfs:label "Model";

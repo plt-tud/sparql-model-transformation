@@ -1,4 +1,6 @@
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sp:   <http://spinrdf.org/sp#>
 PREFIX list: <http://jena.hpl.hp.com/ARQ/list#>
 PREFIX c:    <urn:tag:correspondence/>
+PREFIX tgg:  <http://tgg.plt.et.tu-dresden.de/>

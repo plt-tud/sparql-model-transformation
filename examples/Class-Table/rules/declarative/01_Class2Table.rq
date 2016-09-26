@@ -3,23 +3,23 @@ PREFIX tm: <http://comvantage.eu/graph-trans/table/m#>
 PREFIX c: <http://comvantage.eu/graph-trans/correspondence#>
 
 # create table for each persistent class
-# declarative 
+# declarative
 
 INSERT {
-    GRAPH <graph://correspondence> {
-        [] c:c _:c, _:t;
-            c:columnPrefix "".
-    }
-    GRAPH <graph://table> {
-        _:t  a tm:Table;
-            tm:name ?name.
-#             tm:name ?t_name.
-    }
-    GRAPH <graph://class> {
+    GRAPH <graph://left> {
         _:c a cm:Class;
             cm:name ?name;
 #             cm:name ?c_name;
             cm:is_persistent true.
+    }
+    GRAPH <graph://correspondence> {
+        [] c:c _:c, _:t;
+            c:columnPrefix "".
+    }
+    GRAPH <graph://right> {
+        _:t  a tm:Table;
+            tm:name ?name.
+#             tm:name ?t_name.
     }
 }
 WHERE {
