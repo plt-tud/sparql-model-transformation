@@ -8,14 +8,10 @@ The world of Linked Data allows to create models in a very flexible way. This ma
 
 
 ## Dependencies
- * make
- * Jena TDB
- * Raptor Utils
+ * bash
+ * Jena Fuseki as SPARQL Endpoint
  * spin2sparql (https://github.com/plt-tud/spin2sparql)
- * rdfUmlDiagram
-
 
  ## TODO
  * Use Web application
  * node.js as engine
- * use external SPARQL endpoint
