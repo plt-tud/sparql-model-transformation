@@ -1,4 +1,9 @@
-
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sp:   <http://spinrdf.org/sp#> .
+@prefix list: <http://jena.hpl.hp.com/ARQ/list#> .
+@prefix c:    <urn:tag:correspondence/> .
+@prefix tgg:  <http://tgg.plt.et.tu-dresden.de/> .
 
 tgg:RuleSet a owl:Class;
     rdfs:label "Rule Set".
@@ -10,8 +15,10 @@ tgg:Rule a owl:Class;
 tgg:OperationalRule rdfs:subClassOf tgg:Rule;
     rdfs:label "Operational Rule".
 
-tgg:eclarativeRule rdfs:subClassOf tgg:Rule;
+tgg:DeclarativeRule rdfs:subClassOf tgg:Rule;
         rdfs:label "Declarative Rule".
 
 tgg:Model a owl:Class;
-    rdfs:label "Model";
+    rdfs:label "Model".
+
+tgg:hasOperationalRule a owl:ObjectProperty.
